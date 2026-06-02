@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+odds.json
+probs.json
+.DS_Store
