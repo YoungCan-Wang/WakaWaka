@@ -1,0 +1,4 @@
+interface:
+  display_name: "Soccer Betting"
+  short_description: "Parse odds screenshots and run solver"
+  default_prompt: "Use $soccer-betting to analyze this soccer odds screenshot and run the local solver."

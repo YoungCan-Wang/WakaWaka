@@ -1,6 +1,6 @@
 # WakaWaka ⚽
 
-WakaWaka 是一个轻量级的足球赔率分析与投注计算工具。它采用 **“本地数学求解器 + AI 视觉 Agent 技能”** 的协作模式，无需购买或配置昂贵的 API Key，直接利用您 IDE（如 Cursor、Codex、Antigravity）内置的 AI 视觉能力，解析投注盘口截图并智能计算最佳的投注策略。
+WakaWaka 是一个轻量级的足球赔率分析与投注计算工具。它采用 **“本地数学求解器 + AI 视觉 Agent Skill”** 的协作模式，无需购买或配置昂贵的 API Key，直接利用您 IDE（如 Cursor、Codex、Antigravity）内置的 AI 视觉能力，解析投注盘口截图并运行本地数学求解器。
 
 ---
 
@@ -9,8 +9,8 @@ WakaWaka 是一个轻量级的足球赔率分析与投注计算工具。它采�
 1. **跨盘口无风险套利 (Surebet) 求解**：
    - 自动检测并组合 1X2、亚洲让球盘 (AH)、大小球 (OU)、双重机会 (DC)、平局退款 (DNB) 等市场。
    - 使用线性规划（LP Solver）智能计算最佳资金分配比例，锁定保障收益（期望收益率 > 1.0）。
-2. **基于凯利公式的价值投注 (Value Bet) 推荐**：
-   - 如果您能预估某些比分或赛果的真实概率，工具将根据凯利准则自动计算单项投注的期望价值（EV）及推荐本金比例。
+2. **基于凯利公式的价值投注 (Value Bet) 计算**：
+   - 如果您通过 `probs.json` 提供某些比分或赛果的真实概率估计，工具将根据凯利准则计算单项投注的期望价值（EV）及推荐本金比例。
 3. **AI Vision 协同工作（免 API Key）**：
    - 只要把盘口截图发送给您的 AI 助手，AI 就会利用其视觉模型识别数据并生成 `odds.json`，随后一键运行本地求解器。
 
@@ -44,7 +44,9 @@ WakaWaka 是一个轻量级的足球赔率分析与投注计算工具。它采�
 
 1. 将足球赔率截图拖入 AI 助手的聊天框（Cursor / Antigravity / Codex）。
 2. 发送如下指令给 AI：
-   > “请使用 `soccer_betting_skill.md` 里的技能指令解析这张图片，并运行本地求解器。”
+   > “请使用 `$soccer-betting` 解析这张图片，并运行本地求解器。”
+   
+   如果当前工具不支持 `$skill` 调用，也可以让 AI 读取 `skills/soccer-betting/SKILL.md`。旧入口 `soccer_betting_skill.md` 仍保留为兼容文件，会指向新的标准 Skill。
 3. AI 助手将自动在本地生成 `odds.json`，运行计算命令并把最优投注策略格式化输出给您。
 
 ### 方式 B：手动录入赔率
@@ -108,6 +110,7 @@ WakaWaka 是一个轻量级的足球赔率分析与投注计算工具。它采�
 ## 📂 项目结构
 
 - **[solver.py](file:///Users/youngcan/stock/WakaWaka/solver.py)**: 包含核心计算引擎（LP 规划、凯利公式和终端结果展示）。
-- **[soccer_betting_skill.md](file:///Users/youngcan/stock/WakaWaka/soccer_betting_skill.md)**: AI 助手的 Prompt 指引。
+- **[skills/soccer-betting/SKILL.md](file:///Users/youngcan/stock/WakaWaka/skills/soccer-betting/SKILL.md)**: 标准 Codex Skill，负责指导 AI 解析截图、生成 `odds.json` 并运行本地求解器。
+- **[soccer_betting_skill.md](file:///Users/youngcan/stock/WakaWaka/soccer_betting_skill.md)**: 旧版兼容入口，指向新的标准 Skill。
 - **[requirements.txt](file:///Users/youngcan/stock/WakaWaka/requirements.txt)**: 包含 `scipy` 和 `pydantic` 等依赖。
 - **[.gitignore](file:///Users/youngcan/stock/WakaWaka/.gitignore)**: 忽略临时生成的 `odds.json` 以及 `.venv` 环境。
